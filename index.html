@@ -1,10 +1,580 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Portfolio | Developer & Creative</title>
+
+    <meta name="description"
+          content="My personal portfolio, coding projects, and creative work.">
+
+    <style>
+        :root {
+            --background: #09070f;
+            --surface: #120e1c;
+            --surface-light: #1b1429;
+            --purple: #9b5cff;
+            --purple-dark: #6426a8;
+            --text: #f5f0ff;
+            --muted: #aaa0bc;
+            --border: #30213f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: auto;
+        }
+
+        /* Navigation */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(9, 7, 15, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--purple);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
+
+        /* Hero section */
+
+        .hero {
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            background: var(--purple-dark);
+            filter: blur(150px);
+            opacity: 0.3;
+            right: 0;
+            top: 100px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 750px;
+            padding: 90px 0;
+        }
+
+        .eyebrow {
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #c6a1ff, #8d42e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            color: var(--muted);
+            max-width: 590px;
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 23px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid var(--border);
+            transition: 0.25s ease;
+        }
+
+        .button-primary {
+            background: var(--purple-dark);
+            border-color: var(--purple-dark);
+            color: white;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple);
+        }
+
+        .button-primary:hover {
+            background: #7c35c5;
+        }
+
+        /* General sections */
+
+        section {
+            padding: 90px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 40px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            max-width: 600px;
+        }
+
+        .about {
+            background: #0e0a16;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-content {
+            max-width: 760px;
+        }
+
+        .about-content p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        /* Project cards */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            padding: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-dark);
+            background: var(--surface-light);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background: #29163d;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            color: #c6a1ff;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        /* Skills */
+
+        .skills {
+            background: #0e0a16;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill {
+            padding: 9px 17px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 30px;
+            color: #d5c4ed;
+            font-size: 0.92rem;
+        }
+
+        /* Contact */
+
+        .contact-box {
+            padding: 45px;
+            text-align: center;
+            background: linear-gradient(
+                135deg,
+                #1b102b,
+                #100b19
+            );
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .contact-box h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* Small screens */
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 16px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 14px;
+                font-size: 0.82rem;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding: 85px 0;
+            }
+
+            h1 {
+                letter-spacing: -1.5px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+
+            .contact-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Hello, GitHub!</h1>
-    <p>This is my first website.</p>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="container">
+            <a class="logo" href="#home">My<span>Portfolio.</span></a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#creative">Creative</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="eyebrow">Developer in progress · Creative mind</p>
+
+                    <h1>
+                        Building ideas<br>
+                        into <span class="gradient-text">reality.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Welcome to my corner of the internet.
+                        I'm learning to build for the web, exploring
+                        technology, and expressing my creativity
+                        one project at a time.
+                    </p>
+
+                    <div class="buttons">
+                        <a class="button button-primary"
+                           href="#projects">
+                            Explore My Projects →
+                        </a>
+
+                        <a class="button"
+                           href="#about">
+                            Get to Know Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">A little about me</p>
+                    <h2>Curious by nature.</h2>
+                </div>
+
+                <div class="about-content">
+                    <p>
+                        I'm on a journey to learn how technology works
+                        and how ideas become real things people can use.
+                    </p>
+
+                    <p>
+                        I'm exploring web development, experimenting
+                        with creative ideas, and building my skills
+                        step by step. This portfolio is where I'll
+                        document that journey and share what I create.
+                    </p>
+
+                    <p>
+                        I'm just getting started, and there's a lot
+                        more to build.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Developer projects -->
+        <section id="projects">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">What I'm building</p>
+                    <h2>Developer Portfolio</h2>
+                    <p>
+                        Every project is an opportunity to learn,
+                        experiment, and improve.
+                    </p>
+                </div>
+
+                <div class="projects-grid">
+
+                    <article class="card">
+                        <div class="card-icon">🌐</div>
+                        <h3>My First Website</h3>
+                        <p>
+                            My first HTML project, published online
+                            using GitHub Pages. The beginning of
+                            my web development journey.
+                        </p>
+                        <a class="card-link"
+                           href="https://github.com/aramatsonko147-commits/Rahma147">
+                            View Repository →
+                        </a>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>Future Project</h3>
+                        <p>
+                            A space for my next coding project.
+                            I'll add the details here when it's ready.
+                        </p>
+                        <a class="card-link" href="#contact">
+                            More to come →
+                        </a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Creative work -->
+        <section class="skills" id="creative">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Beyond the code</p>
+                    <h2>My Creative Space</h2>
+                    <p>
+                        Creativity is about exploring possibilities.
+                        This space will grow as I discover new interests
+                        and create new things.
+                    </p>
+                </div>
+
+                <div class="projects-grid">
+
+                    <article class="card">
+                        <div class="card-icon">✍️</div>
+                        <h3>Ideas & Writing</h3>
+                        <p>
+                            A place for thoughts, written ideas,
+                            stories, and things worth sharing.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🎨</div>
+                        <h3>Design & Experiments</h3>
+                        <p>
+                            A collection of visual ideas, design
+                            experiments, and creative projects.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">My learning journey</p>
+                    <h2>Skills I'm Exploring</h2>
+                    <p>
+                        These are the skills I'm beginning to explore
+                        and develop.
+                    </p>
+                </div>
+
+                <div class="skill-list">
+                    <span class="skill">HTML</span>
+                    <span class="skill">CSS</span>
+                    <span class="skill">GitHub</span>
+                    <span class="skill">Web Design</span>
+                    <span class="skill">Creative Thinking</span>
+                    <span class="skill">Problem Solving</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="container">
+                <div class="contact-box">
+                    <p class="eyebrow">Let's connect</p>
+
+                    <h2>More to come.</h2>
+
+                    <p>
+                        I'm learning, building, and creating.
+                        Follow my journey as I turn new ideas
+                        into projects.
+                    </p>
+
+                    <a class="button button-primary"
+                       href="https://github.com/aramatsonko147-commits">
+                        Find Me on GitHub →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 My Portfolio. Built with curiosity and code.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
